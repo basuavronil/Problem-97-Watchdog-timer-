@@ -4,33 +4,29 @@ module watchdog_timer (
     input  wire        enable,
     input  wire        kick,
     input  wire [15:0] timeout_val,
-    output wire        wdt_reset
+    output reg         wdt_reset
 );
 
-    // Internal Registers
+    // Internal Counter Register
     reg [15:0] counter;
-    reg        reset_reg;
 
-    // Drive output from internal register
-    assign wdt_reset = reset_reg;
-
-    // Watchdog Timer Logic
+    // Sequential Watchdog Logic
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             counter   <= timeout_val;
-            reset_reg <= 1'b0;
+            wdt_reset <= 1'b0;
         end else if (enable) begin
             if (kick) begin
-                counter   <= timeout_val; // Petting/kicking the watchdog
-                reset_reg <= 1'b0;
+                counter   <= timeout_val; // Software kick: reload counter
+                wdt_reset <= 1'b0;
             end else if (counter == 16'd0) begin
-                reset_reg <= 1'b1;        // Trigger system reset on underflow
+                wdt_reset <= 1'b1;        // Underflow: assert hardware reset directly
             end else begin
-                counter   <= counter - 1'b1;
+                counter   <= counter - 1'b1; // Normal countdown
             end
         end else begin
             counter   <= timeout_val;
-            reset_reg <= 1'b0;
+            wdt_reset <= 1'b0;
         end
     end
 
