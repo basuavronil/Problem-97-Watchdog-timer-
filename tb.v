@@ -25,44 +25,58 @@ module watchdog_timer_tb;
     integer errors = 0;
 
     initial begin
-        // Initialize Signals
+        // 1. Initialize Signals
         clk         = 0;
         rst_n       = 0;
         enable      = 0;
         kick        = 0;
-        timeout_val = 16'd10; // Set timeout to 10 clock cycles
+        timeout_val = 16'd5; // Set short timeout (5 clock cycles)
 
         $display("=================================================");
-        $display("   Testing 16-bit Watchdog Timer                 ");
+        $display("   Testing Watchdog Timer (Direct output reg)    ");
         $display("=================================================");
 
+        // 2. Hardware Reset
         #15 rst_n = 1; enable = 1;
         @(posedge clk);
 
-        // Test 1: Periodic Kicking (Normal Operation)
+        // Test 1: Periodic Kicking
         repeat (3) begin
-            #40; // Wait 4 clock cycles
+            #20;
             kick <= 1'b1;
             @(posedge clk);
             kick <= 1'b0;
         end
 
         if (wdt_reset !== 1'b0) begin
-            $display("[ERROR] Test 1 Failed! Reset triggered during normal kicking.");
+            $display("[ERROR] Test 1 Failed! wdt_reset triggered during normal software kicking.");
             errors = errors + 1;
         end else begin
-            $display("[PASS]  Test 1: Normal operation verified (Periodic kicks prevent reset).");
+            $display("[PASS]  Test 1: Normal kicking operation verified successfully.");
         end
 
-        // Test 2: System Hang (Stop kicking and allow timeout)
-        $display("[INFO]  Simulating CPU Hang (kicking stopped)...");
-        #120; // Exceed timeout limit (100ns)
+        // Test 2: Software Hang (Stop kicking)
+        $display("[INFO]  Simulating Software Hang (kicking stopped)...");
+        #70; // Exceed 5-cycle timeout (50ns)
 
         if (wdt_reset !== 1'b1) begin
-            $display("[ERROR] Test 2 Failed! Watchdog failed to assert reset on timeout.");
+            $display("[ERROR] Test 2 Failed! wdt_reset failed to trigger on underflow.");
             errors = errors + 1;
         end else begin
-            $display("[PASS]  Test 2: System reset triggered successfully on timeout!");
+            $display("[PASS]  Test 2: Hardware reset (wdt_reset = 1) asserted on timeout!");
+        end
+
+        // Test 3: Clear Reset on Kick
+        @(posedge clk);
+        kick <= 1'b1;
+        @(posedge clk);
+        kick <= 1'b0;
+
+        if (wdt_reset !== 1'b0) begin
+            $display("[ERROR] Test 3 Failed! wdt_reset did not clear after software kick.");
+            errors = errors + 1;
+        end else begin
+            $display("[PASS]  Test 3: wdt_reset cleared after soft recovery kick.");
         end
 
         // Final Summary
