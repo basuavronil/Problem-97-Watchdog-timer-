@@ -24,4 +24,10 @@ It acts as a hardware **"dead man's switch."** During normal system operation, t
 
 ---
 
-## Block Diagram
+## Output 
+### Waveform
+<img width="935" height="254" alt="image" src="https://github.com/user-attachments/assets/30ee93f5-bd68-47c4-98ec-932ca94e743b" />
+
+### Simulation terminal
+<img width="407" height="137" alt="image" src="https://github.com/user-attachments/assets/1e559b75-3d5b-44ea-b850-36b79ca26d33" />
+
