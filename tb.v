@@ -19,6 +19,12 @@ module watchdog_timer_tb;
         .wdt_reset(wdt_reset)
     );
 
+    initial begin
+        $dumpfile("dump.vcd");
+        $dumpvars(0, watchdog_timer_tb);
+  end
+    end
+
     // Clock Generation (10ns Period)
     always #5 clk = ~clk;
 
