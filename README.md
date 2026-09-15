@@ -28,6 +28,42 @@ It acts as a hardware **"dead man's switch."** During normal system operation, t
 ### Waveform
 <img width="935" height="254" alt="image" src="https://github.com/user-attachments/assets/30ee93f5-bd68-47c4-98ec-932ca94e743b" />
 
+## Watchdog Timer (WDT) Waveform & Verification Analysis
+
+This section provides a detailed step-by-step trace analysis of the Watchdog Timer (WDT) waveform captured during functional verification.
+
+---
+
+### Signal Overview
+
+* **`clk`**: Master clock driving the synchronous logic (10 ns clock period).
+* **`rst_n`**: Active-low asynchronous hardware reset.
+* **`enable`**: Control bit enabling the internal countdown/count-up timer.
+* **`timeout_val[15:0]`**: Register configured to `16'h0005`, setting the timeout limit to 5 clock cycles.
+* **`kick`**: External service pulse driven by the CPU to clear the counter.
+* **`errors`**: System status flag indicating an unserviced watchdog fault condition.
+* **`wdt_reset`**: Output trigger signal driven high to reset the system on timeout.
+
+---
+
+### Timeline Breakdown
+
+#### Phase 1: Power-On & Hard Reset (`0 ps` – `15,000 ps`)
+* **State**: System startup and reset initialization.
+* **Behavior**: `rst_n` is held Low (`0`). The module initializes internal registers, and the output `wdt_reset` remains deactivated (`0`).
+
+#### Phase 2: Counter Run & Timeout Trigger (`15,000 ps` – `65,000 ps`)
+* **State**: Unserviced timer expiration.
+* **Behavior**: `rst_n` transitions High (`1`) to release reset, while `enable` drops Low (`0`). With `timeout_val` set to `5` and no incoming `kick` signal to service the module, the counter runs unserviced for 5 clock cycles.
+* **Outcome**: At `~65,000 ps`, the timer expires, asserting `wdt_reset` High (`1`) to initiate a system reboot.
+
+#### Phase 3: Error Flag Assertion (`65,000 ps` – `80,000 ps`)
+* **State**: Fault state capturing.
+* **Behavior**: At `~78,000 ps`, the `errors` signal asserts High (`1`), flagging that the system failed to respond before the timeout threshold was breached.
+
+#### Phase 4: Service Pulse & Recovery (`80,000 ps` – `155,000 ps`)
+* **State**: System recovery via hardware kick.
+* **Behavior**: At `~140,000 ps`, a `kick` pulse is driven High (`1`). Servicing the watchdog clears the active timer state, de-asserts `wdt_reset`, and restores normal module operation.
 ### Simulation terminal
 <img width="407" height="137" alt="image" src="https://github.com/user-attachments/assets/1e559b75-3d5b-44ea-b850-36b79ca26d33" />
 
