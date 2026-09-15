@@ -67,3 +67,7 @@ This section provides a detailed step-by-step trace analysis of the Watchdog Tim
 ### Simulation terminal
 <img width="407" height="137" alt="image" src="https://github.com/user-attachments/assets/1e559b75-3d5b-44ea-b850-36b79ca26d33" />
 
+#### Watchdog Timer Simulation Output Analysis
+
+The VCS simulation log for the **Testing Watchdog Timer (Direct output reg)** testbench shows a failed verification run terminating at `155000 ps` with a total of **2 errors**. During verification, **Test 1 Failed** because `wdt_reset` triggered prematurely during normal software kicking when it should have remained inactive, pointing to an issue in counter resetting or threshold checking. Following this, **Test 2 Passed** as expected by successfully asserting `wdt_reset = 1` upon simulating a software hang where kicking stopped. Finally, **Test 3 Failed** because `wdt_reset` failed to clear after a software kick was re-applied, indicating that the hardware reset flag logic is stuck or missing a clear/recovery path when serviced.
+
