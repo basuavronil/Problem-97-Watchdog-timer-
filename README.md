@@ -45,6 +45,10 @@ This section provides a detailed step-by-step trace analysis of the Watchdog Tim
 * **`wdt_reset`**: Output trigger signal driven high to reset the system on timeout.
 
 ---
+## Watchdog Reset Output (`wdt_reset`)
+
+* **`wdt_reset = 1'b0` (Normal Operation):** Software is actively kicking the timer; system executes normally without interruption.
+* **`wdt_reset = 1'b1` (System Crash/Timeout):** Counter reached zero due to software hang; triggers a hardware reboot to recover system.
 
 ### Timeline Breakdown
 
