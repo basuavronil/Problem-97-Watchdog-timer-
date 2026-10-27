@@ -5,7 +5,7 @@ A **Watchdog Timer (WDT)** is a specialized hardware timing module used to monit
 It acts as a hardware **"dead man's switch."** During normal system operation, the processor must periodically send a clear or **"kick"** (also known as "petting" the watchdog) signal to reload the counter. If  the software crashes, enters an infinite loop, or hangs due to an external disturbance (like electromagnetic interference), it stops kicking the watchdog. The counter underflows (reaches zero), triggering an automatic system-level hardware reset to reboot the chip and restore operation.
          
 ---
-
+ 
 ## Key Functions
 
 * **System Timeout Monitoring:** Continuously counts down from a designated initial value toward zero.
