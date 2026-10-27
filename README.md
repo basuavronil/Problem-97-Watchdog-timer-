@@ -10,7 +10,7 @@ It acts as a hardware **"dead man's switch."** During normal system operation, t
 
 * **System Timeout Monitoring:** Continuously counts down from a designated initial value toward zero.
 * **Periodic Refresh ("Kicking/Petting"):** Resets the internal counter back to its starting count whenever the software issues an active `kick` pulse.
-* **Hardware System Reset:** Asserts an active reset output (`wdt_reset`) when the counter hits zero, forcing the entire processor/system into a fresh restart state.
+* **Hardware System Reset:** Asserts an active reset output (`wdt_reset`) when the counter hits zero, forcing the entire processor/system into a fresh restart state. 
 * **Enable/Disable Control:** Allows the module to be activated or turned off dynamically to save power or allow controlled system sleep states.
  
 ---
