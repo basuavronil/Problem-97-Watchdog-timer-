@@ -1,6 +1,6 @@
 module watchdog_timer (
     input  wire        clk, rst_n, enable, kick,
-    input  wire [15:0] timeout_val,
+    input  wire [15:0] timeout_val,  
     output reg         wdt_reset
 );
 
