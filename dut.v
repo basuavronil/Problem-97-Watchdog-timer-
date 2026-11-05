@@ -1,5 +1,5 @@
 module watchdog_timer (
-    input  wire        clk, rst_n, enable, kick,
+    input clk, rst_n, enable, kick,
     input  wire [15:0] timeout_val,  
     output reg         timeout  // Renamed to timeout
 );
