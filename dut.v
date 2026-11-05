@@ -25,5 +25,4 @@ module watchdog_timer (
             timeout <= 1'b0;
         end
     end
-
 endmodule
