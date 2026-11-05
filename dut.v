@@ -6,7 +6,7 @@ module watchdog_timer (
 
     // Internal Counter Register
     reg [15:0] counter; 
-
+     
     // Sequential Watchdog Logic
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
