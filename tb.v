@@ -1,7 +1,5 @@
 `timescale 1ns / 1ps
-
 module tb_watchdog_timer;
-
     // Testbench signals
     reg        clk;
     reg        rst_n;
