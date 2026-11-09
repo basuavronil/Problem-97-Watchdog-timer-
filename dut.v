@@ -4,7 +4,7 @@ module watchdog_timer (
     output reg         timeout  // Renamed to timeout
 ); 
     // Internal Counter Register 
-    reg [15:0] counter; 
+    reg [15:0] counter;  
     
     // Sequential Watchdog Logic
     always @(posedge clk or negedge rst_n) begin
