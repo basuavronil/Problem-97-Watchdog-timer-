@@ -3,7 +3,7 @@ module watchdog_timer (
     input [15:0] ini_seed_time,
     output reg         timeout  // Renamed to timeout
 );   
-    // Internal Counter Register
+    // Internal Counter Register   
     reg [15:0] counter;   
     
     // Sequential Watchdog Logic   
