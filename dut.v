@@ -2,7 +2,7 @@ module watchdog_timer (
     input clk, rst_n, enable, kick,
     input [15:0] ini_seed_time,
     output reg         timeout  // Renamed to timeout
-);
+);   
     // Internal Counter Register
     reg [15:0] counter;
 
