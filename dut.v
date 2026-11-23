@@ -13,7 +13,7 @@ module watchdog_timer (
             timeout <= 1'b0;
         end else if (enable) begin
             if (kick) begin   
-                counter <= ini_seed_time; // Software kick: reload counter
+                counter <= ini_seed_time; // Software kick: reload counter   
                 timeout <= 1'b0;
             end else if (counter == 16'd0) begin
                 timeout <= 1'b1;        // Underflow: assert timeout indicator
