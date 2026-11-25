@@ -15,7 +15,7 @@ module watchdog_timer (
             end else if (counter == 16'd0) begin
                 timeout <= 1'b1;        
             end else begin
-                counter <= counter - 1'b1; 
+                counter <= counter - 1'b1;    
             end
         end else begin
             counter <= ini_seed_time;
