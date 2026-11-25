@@ -8,7 +8,7 @@ module watchdog_timer (
         if (!rst_n) begin 
             counter <= ini_seed_time;      
             timeout <= 1'b0;
-        end else if (enable) begin
+        end else if (enable) begin   
             if (kick) begin     
                 counter <= ini_seed_time;      
                 timeout <= 1'b0;
