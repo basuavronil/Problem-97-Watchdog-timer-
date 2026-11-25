@@ -9,7 +9,7 @@ module watchdog_timer (
             counter <= ini_seed_time;      
             timeout <= 1'b0;
         end else if (enable) begin
-            if (kick) begin   
+            if (kick) begin     
                 counter <= ini_seed_time;   
                 timeout <= 1'b0;
             end else if (counter == 16'd0) begin
