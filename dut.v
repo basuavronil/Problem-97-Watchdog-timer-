@@ -6,7 +6,7 @@ module watchdog_timer (
     reg [15:0] counter;   
     always @(posedge clk or negedge rst_n) begin     
         if (!rst_n) begin 
-            counter <= ini_seed_time;   
+            counter <= ini_seed_time;      
             timeout <= 1'b0;
         end else if (enable) begin
             if (kick) begin   
