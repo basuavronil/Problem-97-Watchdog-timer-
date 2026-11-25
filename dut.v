@@ -20,6 +20,6 @@ module watchdog_timer (
         end else begin   
             counter <= ini_seed_time;
             timeout <= 1'b0;
-        end
+        end    
     end
 endmodule
