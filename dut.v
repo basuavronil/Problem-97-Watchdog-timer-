@@ -3,7 +3,7 @@ module watchdog_timer (
     input [15:0] ini_seed_time,
     output reg         timeout               
 );          
-    reg [15:0] counter;                
+    reg [15:0] counter;                   
     always @(posedge clk or negedge rst_n)  begin   
         if (!rst_n) begin 
             counter <= ini_seed_time;     
